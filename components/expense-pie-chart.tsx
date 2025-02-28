@@ -1,12 +1,19 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
-import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+import { motion } from "framer-motion";
 
 export default function ExpensePieChart({ expenses, currency }) {
-  const [chartData, setChartData] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [chartData, setChartData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const COLORS = [
     "#8b5cf6", // violet
@@ -19,13 +26,13 @@ export default function ExpensePieChart({ expenses, currency }) {
     "#14b8a6", // teal
     "#f97316", // orange
     "#8b5cf6", // violet (darker)
-  ]
+  ];
 
   useEffect(() => {
     if (expenses.length === 0) {
-      setChartData([])
-      setIsLoading(false)
-      return
+      setChartData([]);
+      setIsLoading(false);
+      return;
     }
 
     // Group by category
@@ -34,45 +41,52 @@ export default function ExpensePieChart({ expenses, currency }) {
         acc[expense.category] = {
           name: expense.category,
           value: 0,
-        }
+        };
       }
 
-      acc[expense.category].value += Number(expense.amount)
-      return acc
-    }, {})
+      acc[expense.category].value += Number(expense.amount);
+      return acc;
+    }, {});
 
-    setChartData(Object.values(categoryData))
-    setIsLoading(false)
-  }, [expenses])
+    setChartData(Object.values(categoryData));
+    setIsLoading(false);
+  }, [expenses]);
 
   const getCurrencySymbol = (code) => {
     const currencyMap = {
+      MMK: "K",
+      THB: "฿",
       USD: "$",
       EUR: "€",
       GBP: "£",
       JPY: "¥",
-      CAD: "$",
-      AUD: "$",
-      INR: "₹",
-      CNY: "¥",
-    }
-    return currencyMap[code] || "$"
-  }
+    };
+    return currencyMap[code] || "฿";
+  };
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
       </div>
-    )
+    );
   }
 
   if (chartData.length === 0) {
-    return <div className="flex items-center justify-center h-full text-gray-500">No data available to display</div>
+    return (
+      <div className="flex items-center justify-center h-full text-gray-500">
+        No data available to display
+      </div>
+    );
   }
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="h-full">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="h-full"
+    >
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
@@ -86,14 +100,21 @@ export default function ExpensePieChart({ expenses, currency }) {
             dataKey="value"
             animationDuration={1500}
             animationBegin={200}
-            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+            label={({ name, percent }) =>
+              `${name} ${(percent * 100).toFixed(0)}%`
+            }
           >
             {chartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
             ))}
           </Pie>
           <Tooltip
-            formatter={(value) => `${getCurrencySymbol(currency)}${value.toFixed(2)}`}
+            formatter={(value) =>
+              `${getCurrencySymbol(currency)}${value.toFixed(2)}`
+            }
             contentStyle={{
               backgroundColor: "white",
               borderRadius: "8px",
@@ -105,6 +126,5 @@ export default function ExpensePieChart({ expenses, currency }) {
         </PieChart>
       </ResponsiveContainer>
     </motion.div>
-  )
+  );
 }
-

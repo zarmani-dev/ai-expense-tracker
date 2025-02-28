@@ -17,14 +17,12 @@ import { ArrowRight, DollarSign, PiggyBank, Settings } from "lucide-react";
 import { AnimatedIcon } from "@/components/animated-icon";
 
 const currencies = [
+  { code: "MMK", symbol: "K", name: "Myanmar Kyat" },
+  { code: "THB", symbol: "฿", name: "Thai Baht" },
   { code: "USD", symbol: "$", name: "US Dollar" },
   { code: "EUR", symbol: "€", name: "Euro" },
   { code: "GBP", symbol: "£", name: "British Pound" },
   { code: "JPY", symbol: "¥", name: "Japanese Yen" },
-  { code: "CAD", symbol: "$", name: "Canadian Dollar" },
-  { code: "AUD", symbol: "$", name: "Australian Dollar" },
-  { code: "INR", symbol: "₹", name: "Indian Rupee" },
-  { code: "CNY", symbol: "¥", name: "Chinese Yuan" },
 ];
 
 export default function SetupPage() {
@@ -44,57 +42,6 @@ export default function SetupPage() {
 
     // Add some sample data for demo purposes
     const currentDate = new Date();
-    const sampleExpenses = [
-      {
-        id: "1",
-        amount: 45.99,
-        category: "Groceries",
-        name: "Weekly groceries",
-        date: new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate() - 2
-        ).toISOString(),
-      },
-      {
-        id: "2",
-        amount: 12.5,
-        category: "Transportation",
-        name: "Bus fare",
-        date: new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate() - 5
-        ).toISOString(),
-      },
-      {
-        id: "3",
-        amount: 89.99,
-        category: "Entertainment",
-        name: "Concert tickets",
-        date: new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate() - 8
-        ).toISOString(),
-      },
-      {
-        id: "4",
-        amount: 34.75,
-        category: "Dining",
-        name: "Restaurant dinner",
-        date: new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate() - 1
-        ).toISOString(),
-      },
-    ];
-
-    localStorage.setItem(
-      "expense-tracker-expenses",
-      JSON.stringify(sampleExpenses)
-    );
 
     // Redirect to dashboard
     setTimeout(() => {
